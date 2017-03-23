@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Юлия Максимова](https://up.htmlacademy.ru/javascript/9/user/367171).
-* Наставник: `Неизвестно`.
+* Наставник: `Дмитрий Ермаков`.
 
 ---
 
