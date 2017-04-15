@@ -61,7 +61,7 @@ function createAds(i) {
       'y': locationY// случайное число, координата y метки на карте в блоке .tokyo__pin-map от 100 до 500
     }
   }
-}
+};
 
 var COUNT_USERS = 8;
 var ads = [];
@@ -70,9 +70,10 @@ for (var i = 0; i < COUNT_USERS; i++) {
 }
 
 // Создаем шаблон по которому будет собираться все меткм для карты
-function createMark () {
+function createMark() {
   var userLocation = document.createElement('div');
-  var userAvatar = document.createElement('img');userLocation.className = 'pin';
+  var userAvatar = document.createElement('img');
+  userLocation.className = 'pin';
   userLocation.style.left = ads[i].location.x + 'px';
   userLocation.style.top = ads[i].location.y + 'px';
   userAvatar.className = 'rounded';
@@ -85,7 +86,7 @@ function createMark () {
 // Вставляем полученные метки в карту
 var tokyoPinMap = document.getElementsByClassName('tokyo__pin-map');
 var fragment = document.createDocumentFragment();
-for (var i = 0; i < 8; i++) {
-	fragment.appendChild(createMark());
-}
-tokyoPinMap[0].appendChild(fragment);
+ for (var i = 0; i < 8; i++) {
+ 	fragment.appendChild(createMark());
+ }
+ tokyoPinMap[0].appendChild(fragment);
