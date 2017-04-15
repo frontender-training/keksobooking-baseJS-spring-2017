@@ -1,6 +1,6 @@
 'use strict';
 
-function createAds (i) {
+function createAds(i) {
   
   var AVATARS = ['img/avatars/user01.png',
                'img/avatars/user02.png',
