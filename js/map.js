@@ -2,8 +2,8 @@
 
 function createAds (i) {
   
-  var AVATARS = ['img/avatars/user01.png', 
-               'img/avatars/user02.png', 
+  var AVATARS = ['img/avatars/user01.png',
+               'img/avatars/user02.png',
                'img/avatars/user03.png',
                'img/avatars/user04.png',
                'img/avatars/user05.png',
@@ -12,12 +12,12 @@ function createAds (i) {
                'img/avatars/user08.png'
              ];
   var TITLE_ADS = ['Большая уютная квартира',
-             'Маленькая неуютная квартира', 
-             'Огромный прекрасный дворец', 
-             'Маленький ужасный дворец', 
-             'Красивый гостевой домик', 
-             'Некрасивый негостеприимный домик', 
-             'Уютное бунгало далеко от моря', 
+             'Маленькая неуютная квартира',
+             'Огромный прекрасный дворец',
+             'Маленький ужасный дворец',
+             'Красивый гостевой домик',
+             'Некрасивый негостеприимный домик',
+             'Уютное бунгало далеко от моря',
              'Неуютное бунгало по колено в воде'
              ];
 
@@ -59,27 +59,27 @@ function createAds (i) {
   var locationX = getRandom(300, 900);
   var locationY = getRandom(100, 500);
 
-  return {     
+  return { 
 
     "author": {
-      "avatar": shuffle(AVATARS)[i] // Перебираем массив и ставим первое значение обновленного массива      
+      "avatar": shuffle(AVATARS)[i] // Перебираем массив и ставим первое значение обновленного массива 
     },
     "offer": {
       "title": shuffle(TITLE_ADS)[i], // Перебираем массив и ставим первое значение обновленного массива
-      "adress": (locationX + ', ' + locationY),  
-      "price": getRandom(1000, 1000000), 
+      "adress": (locationX + ', ' + locationY),
+      "price": getRandom(1000, 1000000),
        // число, случайная цена от 1000 до 1 000 000
-      "type": getRandomArray(TYPE_OF_ROOMS), 
+      "type": getRandomArray(TYPE_OF_ROOMS),
       // Выбираем случайное число из массива типа комнат
       "rooms": getRandomArray(NUMBER_OF_ROOMS),
       // Выбираем случайное число из массива количества комнат
       "guests": getRandom(1, 20)
       , // число, случайное количество гостей, которое можно разместить
-      "checkin": getRandomArray(TIME_CHECKIN), 
+      "checkin": getRandomArray(TIME_CHECKIN),
       // Выбираем случайное число из массива времени заезда
       "checkout": getRandomArray(TIME_CHECKOUT),
       // Выбираем случайное число из массива времени выезда
-      "features": getFeatures(), 
+      "features": getFeatures(),
       // Выбираем случайное число из массива удобств
       "description": '',
       "photos": []
@@ -91,72 +91,48 @@ function createAds (i) {
       // случайное число, координата y метки на карте в блоке .tokyo__pin-map от 100 до 500
     }
   }
-
 }
-   
-  var COUNT_USERS = 8;
-  var ads = [];
-  for (var i = 0; i < COUNT_USERS; i++) {
-   ads.push(createAds(i));
+var COUNT_USERS = 8;
+var ads = [];
+for (var i = 0; i < COUNT_USERS; i++) {
+	ads.push(createAds(i));
 }
 
 // Создаем шаблон по которому будет собираться все меткм для карты
-  function createMark () {
-   var userLocation = document.createElement('div');
-   var userAvatar = document.createElement('img');
-   userLocation.className = 'pin';
-   userLocation.style.left = ads[i].location.x + 'px';
-   userLocation.style.top = ads[i].location.y + 'px';
-   userAvatar.className = 'rounded';
-   userAvatar.width = 40;
-   userAvatar.height = 40;
-   userAvatar.src = ads[i].author.avatar;
-   userLocation.appendChild(userAvatar);   
-   console.log(userLocation);
-   return userLocation;   
-  }
-   // Вставляем полученные метки в карту
-   var tokyoPinMap = document.getElementsByClassName('tokyo__pin-map');
-   var fragment = document.createDocumentFragment();
-      for (var i = 0; i < 8; i++) {            	
-        fragment.appendChild(createMark());
-    }  
-   tokyoPinMap[0].appendChild(fragment);
+function createMark () {
+	var userLocation = document.createElement('div');
+	var userAvatar = document.createElement('img');
+	userLocation.className = 'pin';
+	userLocation.style.left = ads[i].location.x + 'px';
+	userLocation.style.top = ads[i].location.y + 'px';
+	userAvatar.className = 'rounded';
+	userAvatar.width = 40;
+	userAvatar.height = 40;
+	userAvatar.src = ads[i].author.avatar;
+	userLocation.appendChild(userAvatar);
+	return userLocation;
+}
+// Вставляем полученные метки в карту
+var tokyoPinMap = document.getElementsByClassName('tokyo__pin-map');
+var fragment = document.createDocumentFragment();
+for (var i = 0; i < 8; i++) {
+	fragment.appendChild(createMark());
+}
+tokyoPinMap[0].appendChild(fragment);
 
-
-  function createTemplateAds () {  	
-   var userAds = document.querySelector('.dialog__panel');
-   userAds.querySelector('.lodge__title').textContent = ads[i].offer.title;
-   userAds.querySelector('.lodge__address').textContent = ads[i].offer.address;
-   userAds.querySelector('.lodge__price').textContent = ads[i].offer.price + '&#x20bd;/ночь';
-   userAds.querySelector('.lodge__type').textContent = ads[i].offer.type;
-   userAds.querySelector('.lodge__rooms-and-guests').textContent = 'Для' + ads[i].offer.guests + 'гостей в ' + ads[i].offer.rooms + 'комнатах';
-   userAds.querySelector('.lodge__checkin-time').textContent = 'Заезд после' + ads[i].offer.checkin + ', выезд' + ads[i].offer.checkout;
-   // userAds.querySelector('.lodge__features').innerHTML = '<span class="feature__image feature__image--{{название удобства}}"></span>';
-   userAds.querySelector('.lodge__description').textContent = ads[i].offer.description;
-   userAds.querySelector('.dialog__title').img.src = ads[i].author.avatar;
-   console.log(userAds);
-   return userAds;
+function createTemplateAds () {
+	var userAds = document.querySelector('.dialog__panel');
+	userAds.querySelector('.lodge__title').textContent = ads[i].offer.title;
+	userAds.querySelector('.lodge__address').textContent = ads[i].offer.address;
+	userAds.querySelector('.lodge__price').textContent = ads[i].offer.price + '&#x20bd;/ночь';
+	userAds.querySelector('.lodge__type').textContent = ads[i].offer.type;
+	userAds.querySelector('.lodge__rooms-and-guests').textContent = 'Для' + ads[i].offer.guests + 'гостей в ' + ads[i].offer.rooms + 'комнатах';
+	userAds.querySelector('.lodge__checkin-time').textContent = 'Заезд после' + ads[i].offer.checkin + ', выезд' + ads[i].offer.checkout;
+	// userAds.querySelector('.lodge__features').innerHTML = '<span class="feature__image feature__image--{{название удобства}}"></span>';
+	userAds.querySelector('.lodge__description').textContent = ads[i].offer.description;
+	userAds.querySelector('.dialog__title').img.src = ads[i].author.avatar;
+	return userAds;
    }
 
-   var userDialog = document.getElementsByClassName('dialog');
-   var userDialogPanel = document.getElementsByClassName('dialog__panel');
-
-// На основе первого по порядку элемента из сгенерированного массива и шаблона #lodge-template создайте DOM-элемент, 
-//  заполните его данными из объекта и вставьте полученный DOM-элемент вместо блока .dialog__panel:
-
-// Выведите заголовок объявления offer.title в блок .lodge__title
-// Выведите адрес offer.address в блок lodge__address
-// Выведите цену offer.price в блок lodge__price строкой вида {{offer.price}}&#x20bd;/ночь
-
-// В блок lodge__type выведите тип жилья offer.type: Квартира для flat, Бунгало для bungalo, Дом для house
-
-// Выведите количество гостей и комнат offer.rooms и offer.guests в блок .lodge__rooms-and-guests строкой вида Для {{offer.guests}} гостей в {{offer.rooms}} комнатах
-// Время заезда и выезда offer.checkin и offer.checkout в блок .lodge__checkin-time строкой вида Заезд после {{offer.checkin}}, выезд до {{offer.checkout}}
- // В блок .lodge__features выведите все доступные удобства в квартире из массива {{offer.features}} 
-// пустыми спанами с классом feature__image feature__image--{{название удобства}}
-
-// В блок .lodge__description выведите описание объекта недвижимости offer.description
-// Замените src у аватарки пользователя — изображения, которое записано в .dialog__title — на значения поля author.avatar отрисовываемого объекта.
-
-
+var userDialog = document.getElementsByClassName('dialog');
+var userDialogPanel = document.getElementsByClassName('dialog__panel');
