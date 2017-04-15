@@ -12,14 +12,14 @@ function createAds(i) {
   // Функция, меняющая порядок в массиве
   function shuffle(array) {
     for (var j = array.length - 1; j > 0; j--) { // Задаем переменную, у которой числовое значение будет определяться рандомно
-    var randomIndex = Math.floor(Math.random() * (j + 1)); // Задаем переменную, у которой числовое значение будет определяться рандомно
-    var temporaryValue = array[j];
-    array[j] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
-    }    
-    return array;
+      var randomIndex = Math.floor(Math.random() * (j + 1)); // Задаем переменную, у которой числовое значение будет определяться рандомно
+      var temporaryValue = array[j];
+      array[j] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+      }
+      return array;
     }
-  
+
   function getRandom(min, max) {
     return min + Math.floor(Math.random() * (max + 1 - min));
   }
@@ -28,46 +28,37 @@ function createAds(i) {
     return array[Math.floor(Math.random() * array.length)];
   }
 
-  function getFeatures () {
+  function getFeatures() {
   	var newArr = FACILITY;
   	var one = getRandom(0, FACILITY.length);
   	newArr.length = one;
   	return newArr;
   }
-  
+
   var locationX = getRandom(300, 900);
   var locationY = getRandom(100, 500);
 
-  return { 
+  return {
 
-    "author": {
-      "avatar": shuffle(AVATARS)[i] // Перебираем массив и ставим первое значение обновленного массива 
+    'author': {
+      'avatar': shuffle(AVATARS)[i] // Перебираем массив и ставим первое значение обновленного массива
     },
-    "offer": {
-      "title": shuffle(TITLE_ADS)[i], // Перебираем массив и ставим первое значение обновленного массива
-      "adress": (locationX + ', ' + locationY),
-      "price": getRandom(1000, 1000000),
-       // число, случайная цена от 1000 до 1 000 000
-      "type": getRandomArray(TYPE_OF_ROOMS),
-      // Выбираем случайное число из массива типа комнат
-      "rooms": getRandomArray(NUMBER_OF_ROOMS),
-      // Выбираем случайное число из массива количества комнат
-      "guests": getRandom(1, 20)
-      , // число, случайное количество гостей, которое можно разместить
-      "checkin": getRandomArray(TIME_CHECKIN),
-      // Выбираем случайное число из массива времени заезда
-      "checkout": getRandomArray(TIME_CHECKOUT),
-      // Выбираем случайное число из массива времени выезда
-      "features": getFeatures(),
-      // Выбираем случайное число из массива удобств
-      "description": '',
-      "photos": []
+    'offer': {
+      'title': shuffle(TITLE_ADS)[i], // Перебираем массив и ставим первое значение обновленного массива
+      'adress': (locationX + ', ' + locationY),
+      'price': getRandom(1000, 1000000),  // число, случайная цена от 1000 до 1 000 000
+      'type': getRandomArray(TYPE_OF_ROOMS), // Выбираем случайное число из массива типа комнат
+      'rooms': getRandomArray(NUMBER_OF_ROOMS), // Выбираем случайное число из массива количества комнат
+      'guests': getRandom(1, 20), // число, случайное количество гостей, которое можно разместить
+      'checkin': getRandomArray(TIME_CHECKIN),  // Выбираем случайное число из массива времени заезда
+      'checkout': getRandomArray(TIME_CHECKOUT), // Выбираем случайное число из массива времени выезда
+      'features': getFeatures(),// Выбираем случайное число из массива удобств
+      'description': '',
+      'photos': []
     },
-    "location": {
-      "x": locationX,
-      // случайное число, координата x метки на карте в блоке .tokyo__pin-map от 300 до 900,
-      "y": locationY
-      // случайное число, координата y метки на карте в блоке .tokyo__pin-map от 100 до 500
+    'location': {
+      'x': locationX, // случайное число, координата x метки на карте в блоке .tokyo__pin-map от 300 до 900,
+      'y': locationY// случайное число, координата y метки на карте в блоке .tokyo__pin-map от 100 до 500
     }
   }
 }
