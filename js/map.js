@@ -16,9 +16,9 @@ function createAds(i) {
       var temporaryValue = array[j];
       array[j] = array[randomIndex];
       array[randomIndex] = temporaryValue;
-      }
-      return array;
     }
+    return array;
+  }
 
   function getRandom(min, max) {
     return min + Math.floor(Math.random() * (max + 1 - min));
@@ -29,10 +29,10 @@ function createAds(i) {
   }
 
   function getFeatures() {
-  	var newArr = FACILITY;
-  	var one = getRandom(0, FACILITY.length);
-  	newArr.length = one;
-  	return newArr;
+    var newArr = FACILITY;
+    var one = getRandom(0, FACILITY.length);
+    newArr.length = one;
+    return newArr;
   }
 
   var locationX = getRandom(300, 900);
@@ -52,7 +52,7 @@ function createAds(i) {
       'guests': getRandom(1, 20), // число, случайное количество гостей, которое можно разместить
       'checkin': getRandomArray(TIME_CHECKIN),  // Выбираем случайное число из массива времени заезда
       'checkout': getRandomArray(TIME_CHECKOUT), // Выбираем случайное число из массива времени выезда
-      'features': getFeatures(),// Выбираем случайное число из массива удобств
+      'features': getFeatures(), // Выбираем случайное число из массива удобств
       'description': '',
       'photos': []
     },
