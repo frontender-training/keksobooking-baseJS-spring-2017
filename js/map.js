@@ -83,10 +83,11 @@ function createMark() {
   userLocation.appendChild(userAvatar);
   return userLocation;
 }
+
 // Вставляем полученные метки в карту
 var tokyoPinMap = document.getElementsByClassName('tokyo__pin-map');
 var fragment = document.createDocumentFragment();
   for (var i = 0; i < 8; i++) {
-    fragment.appendChild(createMark());
+  fragment.appendChild(createMark());
  }
-  tokyoPinMap[0].appendChild(fragment);
+tokyoPinMap[0].appendChild(fragment);
