@@ -46,7 +46,7 @@ function createAds(i) {
     'offer': {
       'title': shuffle(TITLE_ADS)[i], // Перебираем массив и ставим первое значение обновленного массива
       'adress': (locationX + ', ' + locationY),
-      'price': getRandom(1000, 1000000),  // число, случайная цена от 1000 до 1 000 000
+      'price': getRandom(1000, 1000000),  // число, случайная цена от 1000 до 1 000 000
       'type': getRandomArray(TYPE_OF_ROOMS), // Выбираем случайное число из массива типа комнат
       'rooms': getRandomArray(NUMBER_OF_ROOMS), // Выбираем случайное число из массива количества комнат
       'guests': getRandom(1, 20), // число, случайное количество гостей, которое можно разместить
@@ -60,13 +60,13 @@ function createAds(i) {
       'x': locationX, // случайное число, координата x метки на карте в блоке .tokyo__pin-map от 300 до 900,
       'y': locationY// случайное число, координата y метки на карте в блоке .tokyo__pin-map от 100 до 500
     }
-  }
-};
+  };
+}
 
 var COUNT_USERS = 8;
 var ads = [];
 for (var i = 0; i < COUNT_USERS; i++) {
-	ads.push(createAds(i));
+  ads.push(createAds(i));
 }
 
 // Создаем шаблон по которому будет собираться все меткм для карты
@@ -86,7 +86,7 @@ function createMark() {
 // Вставляем полученные метки в карту
 var tokyoPinMap = document.getElementsByClassName('tokyo__pin-map');
 var fragment = document.createDocumentFragment();
- for (var i = 0; i < 8; i++) {
- 	fragment.appendChild(createMark());
+  for (var i = 0; i < 8; i++) {
+    fragment.appendChild(createMark());
  }
- tokyoPinMap[0].appendChild(fragment);
+  tokyoPinMap[0].appendChild(fragment);
