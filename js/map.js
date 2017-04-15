@@ -1,6 +1,6 @@
 'use strict';
 
-function createAds(i) {  
+function createAds(i) {
   var AVATARS = ['img/avatars/user01.png', 'img/avatars/user02.png', 'img/avatars/user03.png', 'img/avatars/user04.png', 'img/avatars/user05.png', 'img/avatars/user06.png', 'img/avatars/user07.png', 'img/avatars/user08.png'];
   var TITLE_ADS = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'];
   var TYPE_OF_ROOMS = ['flat', 'house', 'bungalo'];
@@ -10,25 +10,25 @@ function createAds(i) {
   var FACILITY = ['wifi', 'dishwasher', 'parking', 'elevator', 'conditioner'];
 
   // Функция, меняющая порядок в массиве
-  function shuffle (array) {
-    for (var i = array.length - 1; i > 0; i--) { // Задаем переменную, у которой числовое значение будет определяться рандомно
-    var randomIndex = Math.floor(Math.random() * (i + 1)); // Задаем переменную, у которой числовое значение будет определяться рандомно
-    var temporaryValue = array[i];
-    array[i] = array[randomIndex];
+  function shuffle(array) {
+    for (var j = array.length - 1; j > 0; j--) { // Задаем переменную, у которой числовое значение будет определяться рандомно
+    var randomIndex = Math.floor(Math.random() * (j + 1)); // Задаем переменную, у которой числовое значение будет определяться рандомно
+    var temporaryValue = array[j];
+    array[j] = array[randomIndex];
     array[randomIndex] = temporaryValue;
     }    
     return array;
     }
   
-  function getRandom (min, max) {
+  function getRandom(min, max) {
     return min + Math.floor(Math.random() * (max + 1 - min));
   }
 
-  function getRandomArray (array) {
+  function getRandomArray(array) {
     return array[Math.floor(Math.random() * array.length)];
   }
 
-  function getFeatures (newArr) {
+  function getFeatures () {
   	var newArr = FACILITY;
   	var one = getRandom(0, FACILITY.length);
   	newArr.length = one;
@@ -91,7 +91,6 @@ function createMark () {
   userLocation.appendChild(userAvatar);
   return userLocation;
 }
-
 // Вставляем полученные метки в карту
 var tokyoPinMap = document.getElementsByClassName('tokyo__pin-map');
 var fragment = document.createDocumentFragment();
@@ -99,19 +98,3 @@ for (var i = 0; i < 8; i++) {
 	fragment.appendChild(createMark());
 }
 tokyoPinMap[0].appendChild(fragment);
-
-function createTemplateAds () {
-	var userAds = document.querySelector('.dialog__panel');
-	userAds.querySelector('.lodge__title').textContent = ads[i].offer.title;
-	userAds.querySelector('.lodge__address').textContent = ads[i].offer.address;
-	userAds.querySelector('.lodge__price').textContent = ads[i].offer.price + '&#x20bd;/ночь';
-	userAds.querySelector('.lodge__type').textContent = ads[i].offer.type;
-	userAds.querySelector('.lodge__rooms-and-guests').textContent = 'Для' + ads[i].offer.guests + 'гостей в ' + ads[i].offer.rooms + 'комнатах';
-	userAds.querySelector('.lodge__checkin-time').textContent = 'Заезд после' + ads[i].offer.checkin + ', выезд' + ads[i].offer.checkout;
-	// userAds.querySelector('.lodge__features').innerHTML = '<span class="feature__image feature__image--{{название удобства}}"></span>';
-	userAds.querySelector('.lodge__description').textContent = ads[i].offer.description;
-	userAds.querySelector('.dialog__title').img.src = ads[i].author.avatar;
-	return userAds;
-   }
-
-var userDialog = document.getElementsByClassName('dialog');var userDialogPanel = document.getElementsByClassName('dialog__panel');
