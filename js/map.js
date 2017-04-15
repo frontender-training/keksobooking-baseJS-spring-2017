@@ -87,7 +87,7 @@ function createMark() {
 // Вставляем полученные метки в карту
 var tokyoPinMap = document.getElementsByClassName('tokyo__pin-map');
 var fragment = document.createDocumentFragment();
-  for (var i = 0; i < 8; i++) {
-  fragment.appendChild(createMark());
- }
+for (var i = 0; i < 8; i++) {
+	fragment.appendChild(createMark());
+  }
 tokyoPinMap[0].appendChild(fragment);
