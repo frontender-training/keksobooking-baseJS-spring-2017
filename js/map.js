@@ -37,10 +37,10 @@ var MARKER_WIDTH = 56;
 // Функция, меняющая порядок в массиве
 function shuffle(array) {
   for (var i = array.length - 1; i > 0; i--) { // Задаем переменную, у которой числовое значение будет определяться рандомно
-  var randomIndex = Math.floor(Math.random() * (i + 1)); // Задаем переменную, у которой числовое значение будет определяться рандомно
-  var temporaryValue = array[i];
-  array[i] = array[randomIndex];
-  array[randomIndex] = temporaryValue;
+    var randomIndex = Math.floor(Math.random() * (i + 1)); // Задаем переменную, у которой числовое значение будет определяться рандомно
+    var temporaryValue = array[i];
+    array[i] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
   }
   return array;
 }
@@ -95,7 +95,7 @@ function getAds() {
   var ads = [];
   for (i = 0; i < COUNT_USERS; i++) {
     ads.push(createAds(i));
-}
+  }
   return ads;
 }
 
@@ -125,6 +125,7 @@ function translateType(type) {
   if (type === 'house') {
     return 'Дом';
   }
+  return type;
 }
 
 function getGuestsAndRooms(guests, rooms) {
@@ -189,7 +190,7 @@ function createOffer(ad) {
   adsList.getElementsByClassName('lodge__checkin-time')[0].textContent = getTime(offer.checkin, offer.checkout);
   removeChilds(adsList.getElementsByClassName('lodge__features')[0]);
   adsList.getElementsByClassName('lodge__features')[0].appendChild(generateIconsFeatures(offer.features));
-  adsList.getElementsByClassName('lodge__description')[0].textContent = offer.description;  
+  adsList.getElementsByClassName('lodge__description')[0].textContent = offer.description;
   offerDialog.removeChild(userAds);
   offerDialog.appendChild(adsList);
 }
