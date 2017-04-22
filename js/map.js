@@ -111,7 +111,7 @@ function createMark(ad) {
   userAvatar.height = 40;
   userAvatar.src = ad.author.avatar;
   userLocation.appendChild(userAvatar);
-  return userLocation;  
+  return userLocation;
 }
 
 // Переводим название типов жилья на русский
