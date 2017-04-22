@@ -36,12 +36,12 @@ var MARKER_WIDTH = 56;
 
 // Функция, меняющая порядок в массиве
 function shuffle(array) {
-for (var i = array.length - 1; i > 0; i--) { // Задаем переменную, у которой числовое значение будет определяться рандомно
-  var randomIndex = Math.floor(Math.random() * (i + 1)); // Задаем переменную, у которой числовое значение будет определяться рандомно
-  var temporaryValue = array[i];
-  array[i] = array[randomIndex];
-  array[randomIndex] = temporaryValue;
-  }
+  for (var i = array.length - 1; i > 0; i--) { // Задаем переменную, у которой числовое значение будет определяться рандомно
+    var randomIndex = Math.floor(Math.random() * (i + 1)); // Задаем переменную, у которой числовое значение будет определяться рандомно
+	  var temporaryValue = array[i];
+	  array[i] = array[randomIndex];
+	  array[randomIndex] = temporaryValue;
+	}
   return array;
 }
 
@@ -50,16 +50,15 @@ function getRandom(min, max) {
   return min + Math.floor(Math.random() * (max + 1 - min));
 }
 
-// Функция, создающая случайное число
+// Функция, возращающая случайное число
 function getRandomArray(array) {
   return array[Math.floor(Math.random() * array.length)];
 }
 // Функция, создающая массив произвольной длины
-function getFeatures() {  	
-  var newArr = FACILITY;
-  var one = getRandom(0, FACILITY.length);
-  newArr.length = one;
-  return newArr;
+function getFeatures(array) {  	
+  var clone = array.slice();
+  clone.length = getRandom(1, array.length); 
+  return clone;
 }
 
 function createAds(i) {
@@ -80,7 +79,7 @@ function createAds(i) {
       'guests': getRandom(1, 20), // число, случайное количество гостей, которое можно разместить
       'checkin': getRandomArray(TIME_CHECKIN),  // Выбираем случайное число из массива времени заезда
       'checkout': getRandomArray(TIME_CHECKOUT), // Выбираем случайное число из массива времени выезда
-      'features': getFeatures(), // Выбираем случайное число из массива удобств
+      'features': getFeatures(FACILITY), // Выбираем случайное число из массива удобств
       'description': '',
       'photos': []
     },
@@ -91,23 +90,26 @@ function createAds(i) {
   };
 }
 
-var i;
-var ads = [];
-for (i = 0; i < COUNT_USERS; i++) {
-  ads.push(createAds(i));  
+function getAds () {
+	var i;
+	var ads = [];
+	for (i = 0; i < COUNT_USERS; i++) {
+		ads.push(createAds(i))
+	}
+	return ads;
 }
 
 // Создаем шаблон по которому будет собираться все меткм для карты
-function createMark() {
+function createMark(ad) {
   var userLocation = document.createElement('div');
   var userAvatar = document.createElement('img');
   userLocation.className = 'pin';
-  userLocation.style.left = (ads[i].location.x - MARKER_HEIGHT) + 'px';
-  userLocation.style.top = ads[i].location.y - (MARKER_WIDTH / 2) + 'px';
+  userLocation.style.left = (ad.location.x - MARKER_HEIGHT) + 'px';
+  userLocation.style.top = ad.location.y - (MARKER_WIDTH / 2) + 'px';
   userAvatar.className = 'rounded';
   userAvatar.width = 40;
   userAvatar.height = 40;
-  userAvatar.src = ads[i].author.avatar;
+  userAvatar.src = ad.author.avatar;
   userLocation.appendChild(userAvatar);
   return userLocation;
 }
@@ -138,72 +140,63 @@ function getPrice(price) {
 }
 
 // Создаем иконку удобств
-// function createIconFeature(feature) {
-// 	var iconFeature = document.createElement('span');
-//   iconFeature.classList.add('feature__image');
-//   iconFeature.classList.add('feature__image--' + feature);
-//   return iconFeature;
-// }
+function createIconFeature(feature) {
+	var iconFeature = document.createElement('span');
+  iconFeature.classList.add('feature__image');
+  iconFeature.classList.add('feature__image--' + feature);
+  return iconFeature;
+}
 
 // Проходим по всему массиву
-// function generateIconsFeatures(arrayFeatures) {
-// var fragment = document.createDocumentFragment();
-// for (i = 0; i < feature.length; i++) {
-// 	fragment.appendChild(createIconFeature());
-//   }
-//   return fragment;
-// }
+function generateIconsFeatures(arrayFeatures) {
+	var fragment = document.createDocumentFragment();
+	for (var i = 0; i < arrayFeatures.length; i++) {
+		var feature = createIconFeature(arrayFeatures[i]);
+		fragment.appendChild(feature);
+	}
+	return fragment;
+}
+
+var ads = getAds();
+createOffer(ads[0]);
+insertPins();
 
 // Вставляем полученные метки в карту
-var tokyoPinMap = document.getElementsByClassName('tokyo__pin-map');
-var fragment = document.createDocumentFragment();
-for (i = 0; i < 8; i++) {
-	fragment.appendChild(createMark());
-  }
-tokyoPinMap[0].appendChild(fragment);
-
-// function createTemplateAds (adsTemplate) {
-
-// 	var userAds = document.querySelector('.dialog__panel');
-// 	userAds.querySelector('.lodge__title').textContent = ads[i].offer.title;
-// 	userAds.querySelector('.lodge__address').textContent = ads[i].offer.address;
-// 	userAds.querySelector('.lodge__price').textContent = ads[i].offer.price + '&#x20bd;/ночь';
-// 	userAds.querySelector('.lodge__type').textContent = ads[i].offer.type;
-// 	userAds.querySelector('.lodge__rooms-and-guests').textContent = 'Для' + ads[i].offer.guests + 'гостей в ' + ads[i].offer.rooms + 'комнатах';
-// 	userAds.querySelector('.lodge__checkin-time').textContent = 'Заезд после' + ads[i].offer.checkin + ', выезд' + ads[i].offer.checkout;
-// 	userAds.querySelector('.lodge__features').appendChild(generateIconsFeatures(ads[i].offer.features));
-// 	userAds.querySelector('.lodge__description').textContent = ads[i].offer.description;
-// 	userAds.querySelector('.dialog__title').img.src = ads[i].author.avatar;
-// 	document.getElementsByClassName('dialog__title')[i].images.src = ads[i].author.avatar;
-// 	return userAds;
-// }
-
-var offerDialog = document.querySelector('#offer-dialog'); // Берем элемент, в который будем вставлять наш шаблон
-var templateAds = document.querySelector('#lodge-template').content // Берем сам шаблон, который будем вставлять
-var userAds = offerDialog.getElementsByClassName('dialog__panel');
-
-function createOfferAvatar() {
-	var dialogTitle = document.querySelector('.dialog__title');
-	var img = document.createElement('img');
-	img.width = 70;
-	img.height = 70;
-	img.src = ads[i].author.avatar;
-	dialogTitle.appendChild(img);
-	return dialogTitle;
+function insertPins() {
+	var tokyoPinMap = document.getElementsByClassName('tokyo__pin-map');
+	var fragment = document.createDocumentFragment();
+	for (var i = 0; i < 8; i++) {
+		fragment.appendChild(createMark(ads[i]));
+	}
+  tokyoPinMap[0].appendChild(fragment);
 }
 
-for (var i = 0; i < 8; i++) {
-	document.getElementsByClassName('lodge__title')[i].textContent = ads[i].offer.title;
-	document.getElementsByClassName('lodge__address')[i].textContent = ads[i].offer.adress;
-	document.getElementsByClassName('lodge__price')[i].innerHTML = getPrice(ads[i].offer.price);
-	document.getElementsByClassName('lodge__type')[i].textContent = translateType(ads[i].offer.type);
-	document.getElementsByClassName('lodge__rooms-and-guests')[i].textContent = getGuestsAndRooms(ads[i].offer.guests, ads[i].offer.rooms);
-	document.getElementsByClassName('lodge__checkin-time')[i].textContent = getTime(ads[i].offer.checkin, ads[i].offer.checkout);
-	// document.getElementsByClassName('lodge__features')[i].appendChild(generateIconsFeatures(ads[i].offer.features));
-	document.getElementsByClassName('lodge__features')[i].textContent = ads[i].offer.features;
-	document.getElementsByClassName('lodge__description')[i].textContent = ads[i].offer.description;
-	var adsList = templateAds.cloneNode(true);
-  offerDialog.appendChild(adsList);
+function createOffer(ad) {
+	var offer = ad.offer;
+	var author = ad.author;
+	var offerDialog = document.querySelector('#offer-dialog'); // Берем элемент, в который будем вставлять наш шаблон
+	var templateAds = document.querySelector('#lodge-template')// Берем сам шаблон, который будем вставлять
+	var userAds = offerDialog.getElementsByClassName('dialog__panel')[0];
+
+	var adsList = userAds.cloneNode(true);
+	var dialogTitle = offerDialog.querySelector('.dialog__title > img');
+	dialogTitle.src = author.avatar;
+
+	adsList.getElementsByClassName('lodge__title')[0].textContent = offer.title;
+	adsList.getElementsByClassName('lodge__address')[0].textContent = offer.adress;
+	adsList.getElementsByClassName('lodge__price')[0].innerHTML = getPrice(offer.price);
+	adsList.getElementsByClassName('lodge__type')[0].textContent = translateType(offer.type);
+	adsList.getElementsByClassName('lodge__rooms-and-guests')[0].textContent = getGuestsAndRooms(offer.guests, offer.rooms);
+	adsList.getElementsByClassName('lodge__checkin-time')[0].textContent = getTime(offer.checkin, offer.checkout);
+	removeChilds(adsList.getElementsByClassName('lodge__features')[0]);
+	adsList.getElementsByClassName('lodge__features')[0].appendChild(generateIconsFeatures(offer.features));
+	adsList.getElementsByClassName('lodge__description')[0].textContent = offer.description;	
+	offerDialog.removeChild(userAds);
+	offerDialog.appendChild(adsList);
 }
 
-offerDialog[0].insertBefore(userAds, createOfferAvatar());
+function removeChilds(element) {
+	while (element.firstChild) {
+		element.removeChild(element.firstChild);
+	}
+}
