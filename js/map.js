@@ -206,19 +206,27 @@ function removeChilds(element) {
 // Окно .dialog показано слева в углу страницы,
 // поэтому, чтобы оно изначально не было показано, нужно добавить соответствующий класс
 
-
 var pinElements = document.getElementsByClassName('pin');
 var clickedPin = null;
+var dialog = document.querySelector('.dialog');
+var dialogClose = dialog.querySelector('.dialog__close');
 
-var clickHandler = function (evt) {
+var onDialogCloseClick = function () {
+  dialog.classList.add('hidden');
+  clickedPin.classList.remove('pin--active');
+}
+
+dialogClose.addEventListener('click', onDialogCloseClick, true);
+
+var onPinClick = function (evt) {
   if (clickedPin) {
-    pinElements[i].classList.remove('pin--active');
+    clickedPin.classList.remove('pin--active');
   }
-
   clickedPin = evt.currentTarget;
   clickedPin.classList.add('pin--active');
+  dialog.classList.remove('hidden');
 };
 
 for (var i = 0; i < pinElements.length; i++) {
-  pinElements[i].addEventListener('click', clickHandler, true);
+  pinElements[i].addEventListener('click', onPinClick, true);
 }
