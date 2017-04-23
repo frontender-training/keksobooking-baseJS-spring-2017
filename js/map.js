@@ -200,3 +200,25 @@ function removeChilds(element) {
     element.removeChild(element.firstChild);
   }
 }
+////////////////////////////////////////////////
+
+// Нажатие на элемент .pin ему добавляется класса pin--active
+// Нажатие на элемент .pin приводит к появлению диалогового окна .dialog.
+// Окно .dialog показано слева в углу страницы, 
+// поэтому, чтобы оно изначально не было показано, нужно добавить соответствующий класс
+
+
+var pinElements = document.getElementsByClassName('pin');
+var clickedPin = null;
+
+var clickHandler = function(evt) {
+  if (clickedPin) {    
+    pinElements[i].classList.remove('pin--active');
+  }
+
+  clickedPin = evt.currentTarget;
+  clickedPin.classList.add('pin--active');
+}
+for (var i = 0; i < pinElements.length; i++) {
+  pinElements[i].addEventListener('click', clickHandler, true);
+}
