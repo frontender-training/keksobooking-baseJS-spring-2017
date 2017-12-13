@@ -210,6 +210,12 @@ var pinElements = document.getElementsByClassName('pin');
 var clickedPin = null;
 var dialog = document.querySelector('.dialog');
 var dialogClose = dialog.querySelector('.dialog__close');
+var dialogImg = document.querySelector('.dialog__title > img');
+
+if (dialogImg.src ===) {
+
+}
+
 
 var onDialogCloseClick = function () {
   dialog.classList.add('hidden');
